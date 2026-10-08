@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Cognara",
+  "version": "0.1.0",
+  "description": "Hides YouTube Shorts for a calmer viewing environment. No data collected.",
+  "minimum_chrome_version": "105",
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.youtube.com/*"],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "Cognara",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "exclude_matches": ["*://m.youtube.com/*"],
+      "css": ["src/hide-shorts.css"],
+      "js": ["src/enabled-sync.js", "src/spa-fallback.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

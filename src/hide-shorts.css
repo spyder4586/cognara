@@ -1,0 +1,37 @@
+/* Cognara: Hide Shorts surfaces (ticket 02 hide seam, ticket 03 Enabled gate).
+ *
+ * Single hide seam: every selector lives here and targets containers
+ * via :has() + "/shorts/" link patterns, not fragile class names.
+ * Injected at document_start so hiding applies before first paint.
+ * Hide-only: direct /shorts/ID visits stay in the Shorts player;
+ * this file never hides the fullscreen reel player itself.
+ *
+ * Enabled gate: rules apply unless the root carries
+ * data-cognara-enabled="false" (set by src/enabled-sync.js from
+ * storage.local). Missing attribute means Enabled, so first
+ * install and default-on show no flash before the async read.
+ */
+
+/* F2: sidebar entry + mini guide entry (link is exactly "/shorts/"). */
+html:not([data-cognara-enabled="false"]) ytd-guide-entry-renderer:has(a[href="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-mini-guide-entry-renderer:has(a[href="/shorts/"]),
+
+/* F1: home / subscriptions shelves. */
+html:not([data-cognara-enabled="false"]) ytd-rich-shelf-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-reel-shelf-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-rich-section-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-shelf-renderer:has(a[href^="/shorts/"]),
+
+/* F1/F3: Shorts tiles injected directly into grids and lists
+ * (home grid, search results, watch-page up-next). */
+html:not([data-cognara-enabled="false"]) ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-video-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-grid-video-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytd-reel-item-renderer:has(a[href^="/shorts/"]),
+
+/* F4: channel Shorts tab (href like /@handle/shorts) + channel shelves. */
+html:not([data-cognara-enabled="false"]) yt-tab-shape:has(a[href$="/shorts"]),
+html:not([data-cognara-enabled="false"]) ytd-grid-shelf-renderer:has(a[href^="/shorts/"]) {
+  display: none !important;
+}
