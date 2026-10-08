@@ -32,6 +32,9 @@ html:not([data-cognara-enabled="false"]) ytd-reel-item-renderer:has(a[href^="/sh
 
 /* F4: channel Shorts tab (href like /@handle/shorts) + channel shelves. */
 html:not([data-cognara-enabled="false"]) yt-tab-shape:has(a[href$="/shorts"]),
-html:not([data-cognara-enabled="false"]) ytd-grid-shelf-renderer:has(a[href^="/shorts/"]) {
+html:not([data-cognara-enabled="false"]) ytd-grid-shelf-renderer:has(a[href^="/shorts/"]),
+/* Search: Shorts grid shelf of lockup tiles (view-model markup, Oct 2026). */
+html:not([data-cognara-enabled="false"]) grid-shelf-view-model:has(a[href^="/shorts/"]),
+html:not([data-cognara-enabled="false"]) ytm-shorts-lockup-view-model-v2:has(a[href^="/shorts/"]) {
   display: none !important;
 }

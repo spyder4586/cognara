@@ -1,6 +1,6 @@
 # Selector maintenance — monthly check
 
-YouTube markup changes can bring Shorts surfaces back. All selectors live in one file: `src/hide-shorts.css` (13 selectors, all `:has()` + `/shorts/` link patterns, per ADR-0002).
+YouTube markup changes can bring Shorts surfaces back. All selectors live in one file: `src/hide-shorts.css` (15 selectors, all `:has()` + `/shorts/` link patterns, per ADR-0002).
 
 ## Monthly (or on user report)
 
@@ -18,4 +18,5 @@ Fixes shipped within 7 days of a markup change (PRD success metric).
 | Date | Checker | Result |
 | --- | --- | --- |
 | 2026-10-08 | MVP prep | Baseline recorded: 13 selectors, link-pattern audit clean; no markup change yet |
+| 2026-10-08 | user report | Search Shorts used `grid-shelf-view-model` + `ytm-shorts-lockup-view-model-v2` (uncovered) and fallback hid `ytd-item-section-renderer` (endless loading). Added 2 selectors (now 15), narrowed fallback to tile level. Loop `scripts/check-search-coverage.js` green. |
 | | | |

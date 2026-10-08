@@ -3,7 +3,7 @@
  * Keeps hiding solid across YouTube single-page navigations with no
  * polling and no background work. The static stylesheet
  * (src/hide-shorts.css) remains the single hide seam and already covers
- * all 13 known Shorts surfaces; this script only covers what CSS cannot
+ * all 15 known Shorts surfaces; this script only covers what CSS cannot
  * target: unknown future wrappers containing a "/shorts/" link that no
  * CSS selector matches. Hide-only: never touches the fullscreen Shorts
  * player itself, never blocks network, never redirects.
@@ -31,13 +31,17 @@
     "ytd-compact-video-renderer," +
     "ytd-reel-item-renderer," +
     "yt-tab-shape," +
-    "ytd-grid-shelf-renderer";
+    "ytd-grid-shelf-renderer," +
+    "grid-shelf-view-model," +
+    "ytm-shorts-lockup-view-model-v2";
 
   // Containers CSS does not target. Only used when a "/shorts/" link has
   // NO covered ancestor, i.e. a future wrapper YouTube introduced after
-  // the stylesheet was written.
+  // the stylesheet was written. Tile/row level only: section-level
+  // containers (e.g. ytd-item-section-renderer, the whole results column)
+  // must never be hidden, or the page blanks and YouTube keeps firing
+  // continuations that look like endless loading.
   var FALLBACK_CONTAINER =
-    "ytd-item-section-renderer," +
     "ytd-horizontal-card-list-renderer," +
     "ytd-compact-radio-renderer," +
     "ytd-playlist-panel-video-renderer," +
@@ -100,9 +104,11 @@
       if (link.closest && link.closest(COVERED)) return;
       var target = null;
       if (link.closest) {
+        // Tile level first: never hide more than one tile/row, so an
+        // unknown future wrapper cannot blank a whole section.
         target =
-          link.closest(FALLBACK_CONTAINER) ||
-          link.closest('[id="dismissible"]');
+          link.closest('[id="dismissible"]') ||
+          link.closest(FALLBACK_CONTAINER);
       }
       if (!target || target === document.documentElement) {
         // Last resort: hide just the link, minimal collateral.
